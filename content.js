@@ -2,13 +2,13 @@ function addBulkAcceptButton() {
   const existing = document.getElementById("bulk-accept-btn");
   if (existing) return;
 
-  const showAllButton=[...document.querySelectorAll('span')].find((btn)=>btn.innerText.trim().toLowerCase() === 'show all')
+  const showAllButton=[...document.querySelectorAll('button')].find((btn)=>btn.innerText.trim().toLowerCase() === 'show all')
   if(!showAllButton){
     console.warn("Show all button not found")
     return;
   }
 
-  const bulkSpan = document.createElement("span");
+  const bulkSpan = document.createElement("button");
 // Copy computed styles from the "Show all" span
   const computedStyles = window.getComputedStyle(showAllSpan);
   for (let prop of computedStyles) {
