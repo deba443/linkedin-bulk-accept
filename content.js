@@ -2,38 +2,32 @@ function addBulkAcceptButton() {
   const existing = document.getElementById("bulk-accept-btn");
   if (existing) return;
 
-  const showAllButton=[...document.querySelectorAll('button')].find((btn)=>btn.innerText.trim().toLowerCase() === 'show all')
-  if(!showAllButton){
-    console.warn("Show all button not found")
+  const targetEl = [...document.querySelectorAll("p")].find((li) =>
+    li.innerText.trim().toLowerCase().includes("manage invitations")
+  );
+  if (!targetEl) {
+    console.warn("Sent list item not found.");
     return;
   }
 
-  const bulkSpan = document.createElement("button");
-// Copy computed styles from the "Show all" span
-  const computedStyles = window.getComputedStyle(showAllSpan);
-  for (let prop of computedStyles) {
-    bulkSpan.style[prop] = computedStyles.getPropertyValue(prop);
-  }
-  bulkSpan.innerText = "Bulk Accept";
-  bulkSpan.id = "bulk-accept-btn";
-  bulkSpan.style.marginLeft = "8px";
-  bulkSpan.style.cursor = "pointer";
-  
-  
-  bulkSpan.onclick = () => {
-    const acceptButtons = [...document.querySelectorAll('button')].filter(btn =>
-      btn.innerText.trim().toLowerCase() === 'accept'
+  // Create the new <p> element
+  const currentEle = document.createElement("p");
+  currentEle.className = targetEl.className;
+  currentEle.innerText = "Bulk accept";
+  currentEle.style.cursor = "pointer";
+  currentEle.onclick = () => {
+    const acceptButtons = [...document.querySelectorAll("button")].filter(
+      (btn) => btn.innerText.trim().toLowerCase() === "accept"
     );
     acceptButtons.forEach((btn, index) => {
       setTimeout(() => btn.click(), index * 500); // Delay to avoid LinkedIn spam detection
     });
     alert(`${acceptButtons.length} invitations accepted.`);
   };
-
-  const target = document.querySelector('.mn-invitation-manager__container') || document.body;
-  target.prepend(button);
+  // Insert after the 'Sent' <li>
+  targetEl.parentNode.insertBefore(currentEle, targetEl.nextSibling);
 }
 
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   setTimeout(addBulkAcceptButton, 2000);
 });
