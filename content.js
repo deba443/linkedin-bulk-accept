@@ -2,19 +2,25 @@ function addBulkAcceptButton() {
   const existing = document.getElementById("bulk-accept-btn");
   if (existing) return;
 
-  const button = document.createElement("button");
-  button.innerText = "Bulk Accept Invitations";
-  button.id = "bulk-accept-btn";
-  button.style.padding = "10px 20px";
-  button.style.backgroundColor = "#0073b1";
-  button.style.color = "white";
-  button.style.border = "none";
-  button.style.borderRadius = "5px";
-  button.style.cursor = "pointer";
-  button.style.margin = "20px";
-  button.style.fontWeight = "bold";
+  const showAllButton=[...document.querySelectorAll('span')].find((btn)=>btn.innerText.trim().toLowerCase() === 'show all')
+  if(!showAllButton){
+    console.warn("Show all button not found")
+    return;
+  }
+
+  const bulkSpan = document.createElement("span");
+// Copy computed styles from the "Show all" span
+  const computedStyles = window.getComputedStyle(showAllSpan);
+  for (let prop of computedStyles) {
+    bulkSpan.style[prop] = computedStyles.getPropertyValue(prop);
+  }
+  bulkSpan.innerText = "Bulk Accept";
+  bulkSpan.id = "bulk-accept-btn";
+  bulkSpan.style.marginLeft = "8px";
+  bulkSpan.style.cursor = "pointer";
   
-  button.onclick = () => {
+  
+  bulkSpan.onclick = () => {
     const acceptButtons = [...document.querySelectorAll('button')].filter(btn =>
       btn.innerText.trim().toLowerCase() === 'accept'
     );
