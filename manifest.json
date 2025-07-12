@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn Bulk Invitation Accepter",
+  "version": "1.0",
+  "description": "Accept all LinkedIn connection requests with one click.",
+  "permissions": ["activeTab", "scripting"],
+  "content_scripts": [
+    {
+      "matches": ["*://www.linkedin.com/mynetwork/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "128": "icon.jpg"
+  },
+  "action": {
+    "default_title": "Bulk Accept on LinkedIn"
+  }
+}
